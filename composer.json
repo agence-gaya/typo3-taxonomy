@@ -1,0 +1,37 @@
+{
+  "name": "gaya/taxonomy",
+  "description": "Taxonomy management for TYPO3 CMS",
+  "keywords": [
+    "typo3",
+    "taxonomy",
+    "categories"
+  ],
+  "authors": [
+    {
+      "name": "GAYA",
+      "email": "contact@gaya.fr",
+      "homepage": "https://www.gaya.fr",
+      "role": "maintainer"
+    }
+  ],
+  "type": "typo3-cms-extension",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "typo3/cms-core": "~12.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "GAYA\\Taxonomy\\": "Classes/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "GAYA\\Taxonomy\\Tests\\": "Tests/"
+    }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "taxonomy"
+    }
+  }
+}

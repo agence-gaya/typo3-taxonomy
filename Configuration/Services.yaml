@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  GAYA\Taxonomy\:
+    resource: '../Classes/*'
+
+  # Events
+  GAYA\Taxonomy\TaxonomyRegistry:
+    tags:
+      - name: event.listener
+        identifier: 'gaya-taxonomy-registry'
+        method: 'addTaxonomyDatabaseSchema'
