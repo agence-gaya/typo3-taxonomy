@@ -13,6 +13,7 @@ return [
         'default_sortby' => 'title',
         'iconfile' => 'EXT:taxonomy/Resources/Public/Icons/Term.svg',
         'searchFields' => 'title, description',
+        'useColumnsForDefaultValues' => 'vocabulary',
         'enablecolumns' => [
             'disabled' => 'hidden',
         ],
