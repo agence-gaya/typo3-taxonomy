@@ -4,14 +4,21 @@ Taxonomy extension for TYPO3 CMS
 
 ## Installation
 
-composer require agence-gaya/typo3-taxonomy
+composer require gaya/typo3-taxonomy
 
 ## Main configuration
 
-Create a global storage folder for your taxonomy in where you will create your vocabularies.
+1. Create a global "Taxonomy" storage folder and one or more vocabularies.
 
-Terms can also be stored in this storage folder, or stored in any other storage folder of your installation.
+   > Vocabularies are global to the TYPO3 instance, only developpers can manage them.
+   > 
+   > Terms can be stored in the global storage folder, also it is best practice to store them into a Site, it will facilitate the permission setup.
 
+2. Create a "Taxonomy" folder in each site.
+
+3. In the Site configuration module, configure for each site the PID of each vocabulary.
+
+Example setup: 
 ```
 Root
     Taxonomy <-- vocabularies and global terms are stored here
@@ -21,16 +28,20 @@ Root
         Taxonomy <-- terms of Site B are stored here
 ```
 
-In the Site configuration module, you need to configure for each site the PID of each vocabulary.
+Now you can create vocabularies and terms.
 
 **Important**
 
-- Each time you add a new Site, you will need to set up those fields for this new site.
-- Each time you will add a new vocabulary, you will need to edit and save each Site configuration.
+- Each time you add a new Site, you will need to set up the Taxonomy tab in the Site configration.
+- Each time you will add a new vocabulary, you will need to setup the Taxonomy tab for each Site configuration.
 
 ## TCA configuration
 
-Two static methods allow to add either a `selectSingle` or `selectTree` field to a table.
+You will want to associate objects, like pages or news, to vocabularies' terms.
+
+You will need to add at least one field per desired vocabulary in the TCA of your object.
+
+Two static methods allow to add either a `selectSingle` or `selectTree` field.
 
     \GAYA\Taxonomy\Utility\TaxonomyTcaUtility::addTaxonomySingle(
         'pages',
@@ -53,6 +64,8 @@ Two static methods allow to add either a `selectSingle` or `selectTree` field to
         'after:title'
     );
 
+After the TCA being configured, run the database upgrade through the Install tool.
+
 **Notes**
 
-- You can add several field for the same vocabulary on the same table: just name the table's field differently.
+- You can add several field for the same vocabulary on the same table: just name the fields differently.

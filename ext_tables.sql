@@ -17,3 +17,15 @@ CREATE TABLE tx_gayataxonomy_domain_model_term
 
     KEY         idx_vocabulary(vocabulary)
 );
+
+CREATE TABLE tx_gayataxonomy_domain_model_term_record_mm
+(
+    -- We have to require those fields explicitely, until the dynamic TCA requires it
+    -- with the first call to TaxonomyTcaUtility::addTaxonomy*
+    uid_local   int unsigned DEFAULT '0' NOT NULL,
+    uid_foreign int unsigned DEFAULT '0' NOT NULL,
+    tablenames  varchar(64) DEFAULT '' NOT NULL,
+    fieldname   varchar(64) DEFAULT '' NOT NULL,
+
+    PRIMARY KEY (uid_local, uid_foreign, tablenames, fieldname)
+);

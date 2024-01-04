@@ -34,7 +34,7 @@
 				<source>Items</source>
 			</trans-unit>
 			<trans-unit id="site_configuration.description">
-				<source>Set the storage PID where the vocabulary "%s" [%s] is stored. If zero, the global storage will be used.</source>
+				<source>Set the storage PID where the terms for "%s" [%s] are stored.</source>
 			</trans-unit>
 			<trans-unit id="tabs.items">
 				<source>Items</source>
