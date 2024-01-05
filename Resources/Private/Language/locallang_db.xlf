@@ -3,34 +3,34 @@
 	<file source-language="en" datatype="plaintext" original="messages">
 		<header/>
 		<body>
-			<trans-unit id="tx_gayataxonomy_domain_model_vocabulary">
+			<trans-unit id="tx_taxonomy_domain_model_vocabulary">
 				<source>Vocabulary</source>
 			</trans-unit>
-			<trans-unit id="tx_gayataxonomy_domain_model_vocabulary.slug">
+			<trans-unit id="tx_taxonomy_domain_model_vocabulary.slug">
 				<source>Slug</source>
 			</trans-unit>
-			<trans-unit id="tx_gayataxonomy_domain_model_vocabulary.title">
+			<trans-unit id="tx_taxonomy_domain_model_vocabulary.title">
 				<source>Title</source>
 			</trans-unit>
-			<trans-unit id="tx_gayataxonomy_domain_model_vocabulary.description">
+			<trans-unit id="tx_taxonomy_domain_model_vocabulary.description">
 				<source>Description</source>
 			</trans-unit>
-			<trans-unit id="tx_gayataxonomy_domain_model_term">
+			<trans-unit id="tx_taxonomy_domain_model_term">
 				<source>Term</source>
 			</trans-unit>
-			<trans-unit id="tx_gayataxonomy_domain_model_term.title">
+			<trans-unit id="tx_taxonomy_domain_model_term.title">
 				<source>Title</source>
 			</trans-unit>
-			<trans-unit id="tx_gayataxonomy_domain_model_term.vocabulary">
+			<trans-unit id="tx_taxonomy_domain_model_term.vocabulary">
 				<source>Vocabulary</source>
 			</trans-unit>
-			<trans-unit id="tx_gayataxonomy_domain_model_term.description">
+			<trans-unit id="tx_taxonomy_domain_model_term.description">
 				<source>Description</source>
 			</trans-unit>
-			<trans-unit id="tx_gayataxonomy_domain_model_term.parent">
+			<trans-unit id="tx_taxonomy_domain_model_term.parent">
 				<source>Parent term</source>
 			</trans-unit>
-			<trans-unit id="tx_gayataxonomy_domain_model_term.items">
+			<trans-unit id="tx_taxonomy_domain_model_term.items">
 				<source>Items</source>
 			</trans-unit>
 			<trans-unit id="site_configuration.description">

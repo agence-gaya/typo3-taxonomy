@@ -1,4 +1,4 @@
-CREATE TABLE tx_gayataxonomy_domain_model_vocabulary
+CREATE TABLE tx_taxonomy_domain_model_vocabulary
 (
     title       varchar(255)  DEFAULT '' NOT NULL,
     slug        varchar(255)  DEFAULT '' NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE tx_gayataxonomy_domain_model_vocabulary
     KEY         idx_slug(slug)
 );
 
-CREATE TABLE tx_gayataxonomy_domain_model_term
+CREATE TABLE tx_taxonomy_domain_model_term
 (
     title       varchar(255)  DEFAULT '' NOT NULL,
     description varchar(2000) DEFAULT '' NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE tx_gayataxonomy_domain_model_term
     KEY         idx_vocabulary(vocabulary)
 );
 
-CREATE TABLE tx_gayataxonomy_domain_model_term_record_mm
+CREATE TABLE tx_taxonomy_domain_model_term_record_mm
 (
     -- We have to require those fields explicitely, until the dynamic TCA requires it
     -- with the first call to TaxonomyTcaUtility::addTaxonomy*

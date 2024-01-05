@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-use GAYA\Taxonomy\UserFunc\SlugUserFunc;
-
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_gayataxonomy_domain_model_vocabulary',
+        'title' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_term',
         'label' => 'title',
         'descriptionColumn' => 'description',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'delete' => 'deleted',
         'default_sortby' => 'title',
-        'iconfile' => 'EXT:taxonomy/Resources/Public/Icons/Vocabulary.svg',
+        'iconfile' => 'EXT:taxonomy/Resources/Public/Icons/Term.svg',
         'searchFields' => 'title, description',
+        'useColumnsForDefaultValues' => 'vocabulary',
         'enablecolumns' => [
             'disabled' => 'hidden',
         ],
@@ -23,7 +22,6 @@ return [
         'languageField' => 'sys_language_uid',
         'translationSource' => 'l10n_source',
         'versioningWS' => true,
-        'adminOnly' => true,
         // todo: activer le hideTable quand le module sera prêt
         //'hideTable' => true,
     ],
@@ -31,7 +29,9 @@ return [
         '1' => [
             'showitem' =>
                 '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                    title, slug, description,
+                    title, vocabulary, parent, description,
+                --div--;LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tabs.items,
+                    items,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                     --palette--;;hidden',
         ],
@@ -78,8 +78,8 @@ return [
                         'value' => 0
                     ],
                 ],
-                'foreign_table' => 'tx_gayataxonomy_domain_model_vocabulary',
-                'foreign_table_where' => 'AND {#tx_gayataxonomy_domain_model_vocabulary}.{#pid}=###CURRENT_PID### AND {#tx_gayataxonomy_domain_model_vocabulary}.{#sys_language_uid} IN (-1,0)',
+                'foreign_table' => 'tx_taxonomy_domain_model_term',
+                'foreign_table_where' => 'AND {#tx_taxonomy_domain_model_term}.{#pid}=###CURRENT_PID### AND {#tx_taxonomy_domain_model_term}.{#sys_language_uid} IN (-1,0)',
                 'default' => 0,
             ],
         ],
@@ -95,7 +95,7 @@ return [
             ],
         ],
         'title' => [
-            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_gayataxonomy_domain_model_vocabulary.title',
+            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_term.title',
             'config' => [
                 'type' => 'input',
                 'size' => 40,
@@ -105,7 +105,7 @@ return [
             ],
         ],
         'description' => [
-            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_gayataxonomy_domain_model_vocabulary.description',
+            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_term.description',
             'exclude' => true,
             'config' => [
                 'type' => 'text',
@@ -113,23 +113,56 @@ return [
                 'cols' => 30,
             ],
         ],
-        'slug' => [
-            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_gayataxonomy_domain_model_vocabulary.slug',
+        'vocabulary' => [
+            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_term.vocabulary',
             'config' => [
-                'type' => 'slug',
-                'size' => 50,
-                'generatorOptions' => [
-                    'fields' => [ 'title' ],
-                    'postModifiers' => [
-                        SlugUserFunc::class . '->normalize',
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'required' => true,
+                'items' => [
+                    [
+                        'label' => '',
+                        'value' => null,
                     ],
                 ],
-                'appearance' => [
-                    'prefix' => SlugUserFunc::class . '->noPrefix',
+                'foreign_table' => 'tx_taxonomy_domain_model_vocabulary',
+                // @todo: could be useful to display only vocabularies available for the current site.
+                //   It is not as easy as it could be: database is not available in TCA building phase.
+                //   One way of doing it is in ext_tables.php, but it will need a layer of caching to be efficient.
+                'foreign_table_where' => 'AND {#tx_taxonomy_domain_model_vocabulary}.{#sys_language_uid} IN (-1,0)',
+            ],
+        ],
+        'parent' => [
+            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_term.parent',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectTree',
+                'foreign_table' => 'tx_taxonomy_domain_model_term',
+                'foreign_table_where' => 'AND {#tx_taxonomy_domain_model_term}.{#pid} = ###CURRENT_PID### AND {#tx_taxonomy_domain_model_term}.{#sys_language_uid} IN (-1,0) AND {#tx_taxonomy_domain_model_term}.{#vocabulary} = ###REC_FIELD_vocabulary###',
+                'size' => 20,
+                'maxitems' => 1,
+                'treeConfig' => [
+                    'parentField' => 'parent',
+                    'appearance' => [
+                        'expandAll' => true,
+                        'showHeader' => true,
+                    ],
                 ],
-                'fallbackCharacter' => '_',
-                'eval' => 'unique',
-                'default' => '',
+            ],
+        ],
+        'items' => [
+            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_term.items',
+            'config' => [
+                'type' => 'group',
+                'allowed' => '*',
+                'MM' => 'tx_taxonomy_domain_model_term_record_mm',
+                'MM_oppositeUsage' => [],
+                'size' => 10,
+                'fieldWizard' => [
+                    'recordsOverview' => [
+                        'disabled' => true,
+                    ],
+                ],
             ],
         ],
     ],

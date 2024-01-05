@@ -14,7 +14,7 @@ class VocabularyRepository
     public function getAllVocabulary(): array
     {
         $qb = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('tx_gayataxonomy_domain_model_vocabulary');
+            ->getQueryBuilderForTable('tx_taxonomy_domain_model_vocabulary');
         $qb->getRestrictions()
             ->removeAll()
             ->add(new DeletedRestriction())
@@ -22,7 +22,7 @@ class VocabularyRepository
             ->add(new WorkspaceRestriction(0));
 
         $qb->select('*')
-            ->from('tx_gayataxonomy_domain_model_vocabulary')
+            ->from('tx_taxonomy_domain_model_vocabulary')
             ->where(
                 $qb->expr()->in('sys_language_uid', [
                     0,

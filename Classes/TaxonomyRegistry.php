@@ -166,11 +166,11 @@ final class TaxonomyRegistry implements SingletonInterface
             }
 
             // Register opposite references for the foreign side of a relation
-            if (empty($GLOBALS['TCA']['tx_gayataxonomy_domain_model_term']['columns']['items']['config']['MM_oppositeUsage'][$tableName])) {
-                $GLOBALS['TCA']['tx_gayataxonomy_domain_model_term']['columns']['items']['config']['MM_oppositeUsage'][$tableName] = [];
+            if (empty($GLOBALS['TCA']['tx_taxonomy_domain_model_term']['columns']['items']['config']['MM_oppositeUsage'][$tableName])) {
+                $GLOBALS['TCA']['tx_taxonomy_domain_model_term']['columns']['items']['config']['MM_oppositeUsage'][$tableName] = [];
             }
-            if (!in_array($fieldName, $GLOBALS['TCA']['tx_gayataxonomy_domain_model_term']['columns']['items']['config']['MM_oppositeUsage'][$tableName])) {
-                $GLOBALS['TCA']['tx_gayataxonomy_domain_model_term']['columns']['items']['config']['MM_oppositeUsage'][$tableName][] = $fieldName;
+            if (!in_array($fieldName, $GLOBALS['TCA']['tx_taxonomy_domain_model_term']['columns']['items']['config']['MM_oppositeUsage'][$tableName])) {
+                $GLOBALS['TCA']['tx_taxonomy_domain_model_term']['columns']['items']['config']['MM_oppositeUsage'][$tableName][] = $fieldName;
             }
 
             // Adding fields to an existing table definition
@@ -181,7 +181,7 @@ final class TaxonomyRegistry implements SingletonInterface
     /**
      * Get the config array for given table and field.
      * This method does NOT take care of adding sql fields, adding the field to TCA types
-     * nor does it set the MM_oppositeUsage in the tx_gayataxonomy_domain_model_term TCA.
+     * nor does it set the MM_oppositeUsage in the tx_taxonomy_domain_model_term TCA.
      */
     protected function getTcaFieldConfiguration(string $tableName, string $fieldName, string $vocabularySlug, string $renderType, array $fieldConfigurationOverride = []): array
     {
@@ -189,11 +189,11 @@ final class TaxonomyRegistry implements SingletonInterface
         $fieldConfiguration = [
             'type' => 'select',
             'renderType' => $renderType,
-            'foreign_table' => 'tx_gayataxonomy_domain_model_term',
-            'foreign_table_where' => '{#tx_gayataxonomy_domain_model_term}.{#sys_language_uid} IN(0, -1) 
-                AND {#tx_gayataxonomy_domain_model_term}.{#pid} = ###SITE:tx_taxonomy_' . $vocabularySlug . '_pid###
-                AND {#tx_gayataxonomy_domain_model_term}.{#vocabulary} = ###SITE:tx_taxonomy_' . $vocabularySlug . '_uid###',
-            'MM' => 'tx_gayataxonomy_domain_model_term_record_mm',
+            'foreign_table' => 'tx_taxonomy_domain_model_term',
+            'foreign_table_where' => '{#tx_taxonomy_domain_model_term}.{#sys_language_uid} IN(0, -1) 
+                AND {#tx_taxonomy_domain_model_term}.{#pid} = ###SITE:tx_taxonomy_' . $vocabularySlug . '_pid###
+                AND {#tx_taxonomy_domain_model_term}.{#vocabulary} = ###SITE:tx_taxonomy_' . $vocabularySlug . '_uid###',
+            'MM' => 'tx_taxonomy_domain_model_term_record_mm',
             'MM_opposite_field' => 'items',
             'MM_match_fields' => [
                 'tablenames' => $tableName,
