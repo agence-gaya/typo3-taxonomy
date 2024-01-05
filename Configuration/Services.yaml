@@ -12,3 +12,10 @@ services:
       - name: event.listener
         identifier: 'gaya-taxonomy-registry'
         method: 'addTaxonomyDatabaseSchema'
+
+  # DataProcessor
+  GAYA\Taxonomy\DataProcessing\TaxonomyProcessor:
+    shared: false
+    tags:
+      - name: 'data.processor'
+        identifier: 'taxonomy'
