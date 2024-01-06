@@ -8,13 +8,12 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_vocabulary',
         'label' => 'title',
-        'descriptionColumn' => 'description',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'delete' => 'deleted',
         'default_sortby' => 'title',
         'iconfile' => 'EXT:taxonomy/Resources/Public/Icons/Vocabulary.svg',
-        'searchFields' => 'title, description',
+        'searchFields' => 'title',
         'enablecolumns' => [
             'disabled' => 'hidden',
         ],
@@ -31,7 +30,7 @@ return [
         '1' => [
             'showitem' =>
                 '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                    title, slug, description,
+                    title, slug,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                     --palette--;;hidden',
         ],
@@ -102,15 +101,6 @@ return [
                 'max' => 255,
                 'eval' => 'trim',
                 'required' => true,
-            ],
-        ],
-        'description' => [
-            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_vocabulary.description',
-            'exclude' => true,
-            'config' => [
-                'type' => 'text',
-                'rows' => 5,
-                'cols' => 30,
             ],
         ],
         'slug' => [

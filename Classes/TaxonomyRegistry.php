@@ -124,6 +124,7 @@ final class TaxonomyRegistry implements SingletonInterface
         // Makes sure to add more TCA to an existing structure
         if (isset($GLOBALS['TCA'][$tableName]['columns'])) {
             // Take specific label into account
+            // todo: find a way to display the title of the vocabulary (we can't access the DB here)
             $label = $options['__vocabularySlug'];
             if (!empty($options['label'])) {
                 $label = $options['label'];

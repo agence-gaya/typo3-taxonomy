@@ -6,13 +6,12 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_term',
         'label' => 'title',
-        'descriptionColumn' => 'description',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'delete' => 'deleted',
         'default_sortby' => 'title',
         'iconfile' => 'EXT:taxonomy/Resources/Public/Icons/Term.svg',
-        'searchFields' => 'title, description',
+        'searchFields' => 'title',
         'useColumnsForDefaultValues' => 'vocabulary',
         'enablecolumns' => [
             'disabled' => 'hidden',
@@ -29,7 +28,7 @@ return [
         '1' => [
             'showitem' =>
                 '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                    title, vocabulary, parent, description,
+                    title, vocabulary, parent,
                 --div--;LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tabs.items,
                     items,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
@@ -104,17 +103,10 @@ return [
                 'required' => true,
             ],
         ],
-        'description' => [
-            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_term.description',
-            'exclude' => true,
-            'config' => [
-                'type' => 'text',
-                'rows' => 5,
-                'cols' => 30,
-            ],
-        ],
         'vocabulary' => [
             'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_term.vocabulary',
+            'l10n_mode' => 'exclude',
+            'l10n_display' => 'defaultAsReadonly',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -134,6 +126,7 @@ return [
         ],
         'parent' => [
             'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_term.parent',
+            'l10n_mode' => 'exclude',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectTree',
@@ -152,8 +145,11 @@ return [
         ],
         'items' => [
             'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_term.items',
+            // https://forge.typo3.org/issues/90430 prevents us to use l10n_mode=exclude here
+            // 'l10n_mode' => 'exclude',
             'config' => [
                 'type' => 'group',
+                'readOnly' => true,
                 'allowed' => '*',
                 'MM' => 'tx_taxonomy_domain_model_term_record_mm',
                 'MM_oppositeUsage' => [],
