@@ -8,32 +8,42 @@ composer require gaya/typo3-taxonomy
 
 ## Main configuration
 
-1. Create a global "Taxonomy" storage folder and one or more vocabularies.
+1. Create a global "Taxonomy" storage folder with one or more vocabularies inside.
 
-   > Vocabularies are global to the TYPO3 instance, only developpers can manage them.
+   > Vocabularies are global to the TYPO3 instance, only admins can manage them.
    > 
-   > Terms can be stored in the global storage folder, also it is best practice to store them into a Site, it will facilitate the permission setup.
+   > Terms of a vocabulary can be stored in the global folder or stored inside a Site.
 
 2. Create a "Taxonomy" folder in each site.
 
 3. In the Site configuration module, configure for each site the PID of each vocabulary.
 
-Example setup: 
-```
-Root
-    Taxonomy <-- vocabularies and global terms are stored here
-    Site A
-        Taxonomy <-- terms of Site B are stored here
-    Site B
-        Taxonomy <-- terms of Site B are stored here
-```
-
-Now you can create vocabularies and terms.
-
 **Important**
 
 - Each time you add a new Site, you will need to set up the Taxonomy tab in the Site configration.
 - Each time you will add a new vocabulary, you will need to setup the Taxonomy tab for each Site configuration.
+
+**Example setups**
+
+Single site, multi-lingual:
+```
+Root
+   Site A
+      Taxonomy <-- vocabularies and terms are stored and translated here
+```
+
+Multi-site, multi-lingual:
+```
+Root
+   Global site
+      Taxonomy <-- vocabularies and global terms are stored and translated here
+   Site B
+      Taxonomy <-- terms of Site B are stored and translated here
+   Site C: will use global scope
+```
+
+Note: since TYPO3 v12, it is not allowed anymore to translate records outside a Site.
+You need to create a virtual site for common records to be translated.
 
 ## TCA configuration
 
