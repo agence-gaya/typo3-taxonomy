@@ -21,10 +21,10 @@ final class SiteConfigurationUtility
 
         // Add a set of uid/pid fields for each existing vocabulary
         foreach (self::getAllVocabulary() as $vocabulary) {
-            $paletteName = 'tx_taxonomy_' . $vocabulary['slug'];
+            $paletteName = 'tx_taxonomy_' . $vocabulary['name'];
 
             // UID of the vocabulary is stored in SiteConfiguration for later use
-            $fieldNameUid = 'tx_taxonomy_' . $vocabulary['slug'] . '_uid';
+            $fieldNameUid = 'tx_taxonomy_' . $vocabulary['name'] . '_uid';
             $GLOBALS['SiteConfiguration']['site']['columns'][$fieldNameUid] = [
                 'label' => 'UID',
                 'config' => [
@@ -44,7 +44,7 @@ final class SiteConfigurationUtility
             ];
 
             // PID can be set here to be local to the site.
-            $fieldNamePid = 'tx_taxonomy_' . $vocabulary['slug'] . '_pid';
+            $fieldNamePid = 'tx_taxonomy_' . $vocabulary['name'] . '_pid';
             $GLOBALS['SiteConfiguration']['site']['columns'][$fieldNamePid] = [
                 'label' => 'PID',
                 // type=group: not supported in SiteConfiguration pseudo TCA
@@ -67,7 +67,7 @@ final class SiteConfigurationUtility
                     'Taxonomy',
                     [
                         $vocabulary['title'],
-                        $vocabulary['slug']
+                        $vocabulary['name']
                     ]
                 ),
                 'showitem' => $fieldNamePid . ',' . $fieldNameUid,

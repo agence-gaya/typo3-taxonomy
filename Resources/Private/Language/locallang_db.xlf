@@ -6,8 +6,11 @@
 			<trans-unit id="tx_taxonomy_domain_model_vocabulary">
 				<source>Vocabulary</source>
 			</trans-unit>
-			<trans-unit id="tx_taxonomy_domain_model_vocabulary.slug">
-				<source>Slug</source>
+			<trans-unit id="tx_taxonomy_domain_model_vocabulary.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_taxonomy_domain_model_vocabulary.name.description">
+				<source>Technical name of the vocabulary. Must be unique.</source>
 			</trans-unit>
 			<trans-unit id="tx_taxonomy_domain_model_vocabulary.title">
 				<source>Title</source>

@@ -29,7 +29,7 @@ final class TaxonomyRegistry implements SingletonInterface
      *
      * @param string $tableName Name of the table to be registered
      * @param string $fieldName Name of the field to be registered
-     * @param string $vocabularySlug Slug of the taxonomy vocabulary of the field
+     * @param string $vocabularyName Name of the taxonomy vocabulary of the field
      * @param array $options Additional configuration options
      *              + fieldList: field configuration to be added to showitems
      *              + typesList: list of types that shall visualize the new field
@@ -41,7 +41,7 @@ final class TaxonomyRegistry implements SingletonInterface
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
-    public function add(string $tableName, string $fieldName, string $vocabularySlug, array $options = [], bool $override = false): bool
+    public function add(string $tableName, string $fieldName, string $vocabularyName, array $options = [], bool $override = false): bool
     {
         $didRegister = false;
         if (empty($tableName)) {
@@ -50,8 +50,8 @@ final class TaxonomyRegistry implements SingletonInterface
         if (empty($fieldName)) {
             throw new \InvalidArgumentException('No or invalid field name "' . $fieldName . '" given.', 1703252977);
         }
-        if (empty($vocabularySlug)) {
-            throw new \InvalidArgumentException('No or invalid vocabulary slug "' . $vocabularySlug . '" given.', 1703252978);
+        if (empty($vocabularyName)) {
+            throw new \InvalidArgumentException('No or invalid vocabulary name "' . $vocabularyName . '" given.', 1703252978);
         }
 
         if ($override) {
@@ -59,7 +59,7 @@ final class TaxonomyRegistry implements SingletonInterface
         }
 
         if (!$this->isRegistered($tableName, $fieldName)) {
-            $options['__vocabularySlug'] = $vocabularySlug;
+            $options['__vocabularyName'] = $vocabularyName;
             $this->registry[$tableName][$fieldName] = $options;
 
             if (isset($GLOBALS['TCA'][$tableName]['columns'])) {
@@ -125,7 +125,7 @@ final class TaxonomyRegistry implements SingletonInterface
         if (isset($GLOBALS['TCA'][$tableName]['columns'])) {
             // Take specific label into account
             // todo: find a way to display the title of the vocabulary (we can't access the DB here)
-            $label = $options['__vocabularySlug'];
+            $label = $options['__vocabularyName'];
             if (!empty($options['label'])) {
                 $label = $options['label'];
             }
@@ -146,7 +146,7 @@ final class TaxonomyRegistry implements SingletonInterface
                     'config' => $this->getTcaFieldConfiguration(
                         $tableName,
                         $fieldName,
-                        $options['__vocabularySlug'],
+                        $options['__vocabularyName'],
                         $options['renderType'],
                         $fieldConfiguration
                     ),
@@ -184,7 +184,7 @@ final class TaxonomyRegistry implements SingletonInterface
      * This method does NOT take care of adding sql fields, adding the field to TCA types
      * nor does it set the MM_oppositeUsage in the tx_taxonomy_domain_model_term TCA.
      */
-    protected function getTcaFieldConfiguration(string $tableName, string $fieldName, string $vocabularySlug, string $renderType, array $fieldConfigurationOverride = []): array
+    protected function getTcaFieldConfiguration(string $tableName, string $fieldName, string $vocabularyName, string $renderType, array $fieldConfigurationOverride = []): array
     {
         // Forges a new field
         $fieldConfiguration = [
@@ -192,8 +192,8 @@ final class TaxonomyRegistry implements SingletonInterface
             'renderType' => $renderType,
             'foreign_table' => 'tx_taxonomy_domain_model_term',
             'foreign_table_where' => '{#tx_taxonomy_domain_model_term}.{#sys_language_uid} IN(0, -1) 
-                AND {#tx_taxonomy_domain_model_term}.{#pid} = ###SITE:tx_taxonomy_' . $vocabularySlug . '_pid###
-                AND {#tx_taxonomy_domain_model_term}.{#vocabulary} = ###SITE:tx_taxonomy_' . $vocabularySlug . '_uid###',
+                AND {#tx_taxonomy_domain_model_term}.{#pid} = ###SITE:tx_taxonomy_' . $vocabularyName . '_pid###
+                AND {#tx_taxonomy_domain_model_term}.{#vocabulary} = ###SITE:tx_taxonomy_' . $vocabularyName . '_uid###',
             'MM' => 'tx_taxonomy_domain_model_term_record_mm',
             'MM_opposite_field' => 'items',
             'MM_match_fields' => [

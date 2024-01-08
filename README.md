@@ -57,7 +57,7 @@ Two static methods allow to add either a `selectSingle` or `selectTree` field.
  \GAYA\Taxonomy\Utility\TaxonomyTcaUtility::addTaxonomySingle(
      'pages',
      'my_taxonomy_field',
-     'my_vocabulary_slug',
+     'my_vocabulary_name',
      (string) \TYPO3\CMS\Core\Domain\Repository\PageRepository::DOKTYPE_DEFAULT,
      // by default, field is added in a new Taxonomy tab
      '',
@@ -68,7 +68,7 @@ Two static methods allow to add either a `selectSingle` or `selectTree` field.
  \GAYA\Taxonomy\Utility\TaxonomyTcaUtility::addTaxonomyTree(
      'pages',
      'my_other_taxonomy_field',
-     'my_vocabulary_slug',
+     'my_vocabulary_name',
      // if no typesList given, the field will be added to every types
      '',
      // use the usual position definition to add the field where you want

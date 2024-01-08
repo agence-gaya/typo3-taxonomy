@@ -30,7 +30,7 @@ return [
         '1' => [
             'showitem' =>
                 '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                    title, slug,
+                    title, name,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                     --palette--;;hidden',
         ],
@@ -103,8 +103,9 @@ return [
                 'required' => true,
             ],
         ],
-        'slug' => [
-            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_vocabulary.slug',
+        'name' => [
+            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_vocabulary.name',
+            'description' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_vocabulary.name.description',
             'config' => [
                 'type' => 'slug',
                 'size' => 50,

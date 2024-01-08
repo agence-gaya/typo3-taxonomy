@@ -1,9 +1,9 @@
 CREATE TABLE tx_taxonomy_domain_model_vocabulary
 (
     title       varchar(255)  DEFAULT '' NOT NULL,
-    slug        varchar(255)  DEFAULT '' NOT NULL,
+    name        varchar(50)  DEFAULT '' NOT NULL,
 
-    KEY         idx_slug(slug)
+    KEY         idx_name(name)
 );
 
 CREATE TABLE tx_taxonomy_domain_model_term

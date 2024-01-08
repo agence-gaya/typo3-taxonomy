@@ -9,17 +9,17 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 final class TaxonomyTcaUtility
 {
-    public static function addTaxonomyTree(string $tableName, string $fieldName, string $vocabularySlug, string $typesList = '', $position = '', array $fieldConfigurationOverride = []): void
+    public static function addTaxonomyTree(string $tableName, string $fieldName, string $vocabularyName, string $typesList = '', $position = '', array $fieldConfigurationOverride = []): void
     {
-        self::addToRegistry($tableName, $fieldName, $vocabularySlug, $typesList, $position, 'selectTree', $fieldConfigurationOverride);
+        self::addToRegistry($tableName, $fieldName, $vocabularyName, $typesList, $position, 'selectTree', $fieldConfigurationOverride);
     }
 
-    public static function addTaxonomySingle(string $tableName, string $fieldName, string $vocabularySlug, string $typesList = '', $position = '', array $fieldConfigurationOverride = []): void
+    public static function addTaxonomySingle(string $tableName, string $fieldName, string $vocabularyName, string $typesList = '', $position = '', array $fieldConfigurationOverride = []): void
     {
-        self::addToRegistry($tableName, $fieldName, $vocabularySlug, $typesList, $position, 'selectSingle', $fieldConfigurationOverride);
+        self::addToRegistry($tableName, $fieldName, $vocabularyName, $typesList, $position, 'selectSingle', $fieldConfigurationOverride);
     }
 
-    private static function addToRegistry(string $tableName, string $fieldName, string $vocabularySlug, string $typesList, string $position, string $renderType, array $fieldConfigurationOverride): void
+    private static function addToRegistry(string $tableName, string $fieldName, string $vocabularyName, string $typesList, string $position, string $renderType, array $fieldConfigurationOverride): void
     {
         $options = [
             'renderType' => $renderType,
@@ -29,7 +29,7 @@ final class TaxonomyTcaUtility
             'fieldConfiguration' => $fieldConfigurationOverride,
         ];
         $result = GeneralUtility::makeInstance(TaxonomyRegistry::class)
-            ->add($tableName, $fieldName, $vocabularySlug, $options);
+            ->add($tableName, $fieldName, $vocabularyName, $options);
 
         if ($result === false) {
             throw new \InvalidArgumentException(sprintf(
