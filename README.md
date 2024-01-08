@@ -8,15 +8,21 @@ composer require gaya/typo3-taxonomy
 
 ## Main configuration
 
-1. Create a global "Taxonomy" storage folder with one or more vocabularies inside.
-
    > Vocabularies are global to the TYPO3 instance, only admins can manage them.
    > 
    > Terms of a vocabulary can be stored in the global folder or stored inside a Site.
 
+1. (Optional) Create a global "Taxonomy" storage folder with one or more vocabularies inside.
+
 2. Create a "Taxonomy" folder in each site.
 
 3. In the Site configuration module, configure for each site the PID of each vocabulary.
+
+**Note**
+
+Since TYPO3 v12, it is not allowed anymore to translate records outside a Site.
+If you plan to store common term and to translate them,
+you will need to create and configure a virtual site for those common records to be translated.
 
 **Important**
 
@@ -28,22 +34,20 @@ composer require gaya/typo3-taxonomy
 Single site, multi-lingual:
 ```
 Root
+   Taxonomy <-- vocabularies are stored here
    Site A
-      Taxonomy <-- vocabularies and terms are stored and translated here
+      Taxonomy <-- terms are stored and translated here
 ```
 
 Multi-site, multi-lingual:
 ```
 Root
-   Global site
+   Global virtual site
       Taxonomy <-- vocabularies and global terms are stored and translated here
    Site B
       Taxonomy <-- terms of Site B are stored and translated here
    Site C: will use global scope
 ```
-
-Note: since TYPO3 v12, it is not allowed anymore to translate records outside a Site.
-You need to create a virtual site for common records to be translated.
 
 ## TCA configuration
 
@@ -51,32 +55,39 @@ You will want to associate objects, like pages or news, to vocabularies' terms.
 
 You will need to add at least one field per desired vocabulary in the TCA of your object.
 
-Two static methods allow to add either a `selectSingle` or `selectTree` field.
+This is an example to create a 2 fields in the pages table.
+The code snippet goes into a file in your sitepackage or theme extension in the folder `Configuration/TCA/Overrides/`.
+The file can have any name but it is good practice to name it according to the database table it relates to.
+In this case this would be `pages.php`.
 
 ```php
- \GAYA\Taxonomy\Utility\TaxonomyTcaUtility::addTaxonomySingle(
-     'pages',
-     'my_taxonomy_field',
-     'my_vocabulary_name',
-     (string) \TYPO3\CMS\Core\Domain\Repository\PageRepository::DOKTYPE_DEFAULT,
-     // by default, field is added in a new Taxonomy tab
-     '',
-     // you can override the TCA config
-     ['required' => true]
- );
+GeneralUtility::makeInstance(Registry::class)
+    ->configureTaxonomyField(
+        (new TaxonomyConfiguration('pages', 'my_taxonomy_field', 'my_vocabulary_name'))
+            // you can override label, which is by default the vocabulary name
+            ->setLabel('My Vocabulary')
+            // you can set the field description
+            ->setDescription('Choose a term to associate with this content')
+    );
 
- \GAYA\Taxonomy\Utility\TaxonomyTcaUtility::addTaxonomyTree(
-     'pages',
-     'my_other_taxonomy_field',
-     'my_vocabulary_name',
-     // if no typesList given, the field will be added to every types
-     '',
-     // use the usual position definition to add the field where you want
-     'after:title'
- );
+GeneralUtility::makeInstance(Registry::class)
+    ->configureTaxonomyField(
+        (new TaxonomyConfiguration('pages', 'my_other_taxonomy_field', 'my_other_vocabulary_name'))
+            ->setLabel('My Other Vocabulary')
+            ->setDescription('Choose a term to associate with this content')
+            // by default, renderType is selectSingle
+            ->setRenderTypeTree()
+            // by default, field is optional
+            ->setRequired()
+            // if no types list given, the field will be added to every types
+            ->setTypes([ PageRepository::DOKTYPE_DEFAULT ])
+            // by default, field is added in a Taxonomy tab, but you can
+            // use the usual position definition to add the field where you want
+            ->setPosition('after:title')
+    );
 ```
 
-After the TCA being configured, run the database upgrade through the Install tool.
+After the TCA being configured, don't forget run the database upgrade through the Install tool.
 
 **Notes**
 

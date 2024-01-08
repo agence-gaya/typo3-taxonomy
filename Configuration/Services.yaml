@@ -7,10 +7,10 @@ services:
     resource: '../Classes/*'
 
   # Events
-  GAYA\Taxonomy\TaxonomyRegistry:
+  GAYA\Taxonomy\Tca\Registry:
     tags:
       - name: event.listener
-        identifier: 'gaya-taxonomy-registry'
+        identifier: 'gaya-taxonomy-tca-registry'
         method: 'addTaxonomyDatabaseSchema'
 
   # DataProcessor
