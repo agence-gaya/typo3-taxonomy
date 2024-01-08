@@ -8,6 +8,7 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_vocabulary',
         'label' => 'title',
+        'descriptionColumn' => 'rowDescription',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'delete' => 'deleted',
@@ -30,7 +31,9 @@ return [
         '1' => [
             'showitem' =>
                 '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                    title, name,
+                    title, name, 
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
+                    rowDescription,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                     --palette--;;hidden',
         ],
@@ -121,6 +124,15 @@ return [
                 'fallbackCharacter' => '_',
                 'eval' => 'unique',
                 'default' => '',
+            ],
+        ],
+        'rowDescription' => [
+            'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_vocabulary.rowDescription',
+            'exclude' => true,
+            'config' => [
+                'type' => 'text',
+                'rows' => 5,
+                'cols' => 30,
             ],
         ],
     ],

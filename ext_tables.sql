@@ -2,6 +2,7 @@ CREATE TABLE tx_taxonomy_domain_model_vocabulary
 (
     title       varchar(255)  DEFAULT '' NOT NULL,
     name        varchar(50)  DEFAULT '' NOT NULL,
+    rowDescription text,
 
     KEY         idx_name(name)
 );

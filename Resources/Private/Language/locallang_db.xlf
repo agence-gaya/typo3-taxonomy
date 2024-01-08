@@ -15,6 +15,9 @@
 			<trans-unit id="tx_taxonomy_domain_model_vocabulary.title">
 				<source>Title</source>
 			</trans-unit>
+			<trans-unit id="tx_taxonomy_domain_model_vocabulary.rowDescription">
+				<source>Description</source>
+			</trans-unit>
 			<trans-unit id="tx_taxonomy_domain_model_term">
 				<source>Term</source>
 			</trans-unit>
