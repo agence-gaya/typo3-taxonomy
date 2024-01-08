@@ -109,6 +109,7 @@ return [
         'name' => [
             'label' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_vocabulary.name',
             'description' => 'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tx_taxonomy_domain_model_vocabulary.name.description',
+            'l10n_mode' => 'exclude',
             'config' => [
                 'type' => 'slug',
                 'size' => 50,
