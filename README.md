@@ -4,17 +4,19 @@ Taxonomy extension for TYPO3 CMS
 
 ## Installation
 
+```
 composer require gaya/typo3-taxonomy
+```
 
-## Main configuration
+## Site configuration
 
    > Vocabularies are global to the TYPO3 instance, only admins can manage them.
    > 
-   > Terms of a vocabulary can be stored in the global folder or stored inside a Site.
+   > Terms of a vocabulary can be stored in a common folder or stored inside a Site.
 
-1. (Optional) Create a global "Taxonomy" storage folder with one or more vocabularies inside.
+1. (Optional) Create a global "Taxonomy" storage folder, set the field "Contains plugin" to "Taxonomy", and create one or more vocabularies inside it.
 
-2. Create a "Taxonomy" folder in each site.
+2. Create a "Taxonomy" folder in each site, and set the field "Contains plugin" to "Taxonomy"
 
 3. In the Site configuration module, configure for each site the PID of each vocabulary.
 
@@ -93,11 +95,11 @@ After the TCA being configured, don't forget run the database upgrade through th
 
 - You can add several field for the same vocabulary on the same table: just name the fields differently.
 
-## Accessing Terms in your template
+## Usage in frontend
 
 ### FLUIDTEMPLATE
 
-Use the Taxonomy processor (see the processor class for more details about all the options)
+Use the Taxonomy processor
 
 ```typoscript
 page.10 = FLUIDTEMPLATE
@@ -112,3 +114,5 @@ page.10 {
    }
 }
 ```
+
+See `\GAYA\Taxonomy\DataProcessing\TaxonomyProcessor` for more details about available options.

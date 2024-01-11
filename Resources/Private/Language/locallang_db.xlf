@@ -34,13 +34,19 @@
 				<source>Items</source>
 			</trans-unit>
 			<trans-unit id="site_configuration.description">
-				<source>Set the storage PID where the terms for "%s" [%s] are stored.</source>
+				<source>Choose the storage where the terms for "%s" [%s] will be found on this site</source>
+			</trans-unit>
+			<trans-unit id="site_configuration.uid.description">
+				<source>You can ignore this field: it is only there for a technical aspect</source>
 			</trans-unit>
 			<trans-unit id="tabs.items">
 				<source>Items</source>
 			</trans-unit>
 			<trans-unit id="tabs.taxonomy">
 				<source>Taxonomy</source>
+			</trans-unit>
+			<trans-unit id="pages.module.taxonomy-folder">
+				<source>Taxonomy folder</source>
 			</trans-unit>
 		</body>
 	</file>

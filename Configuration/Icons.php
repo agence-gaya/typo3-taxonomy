@@ -17,4 +17,8 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:taxonomy/Resources/Public/Icons/Term.svg',
     ],
+    'gaya-taxonomy-folder' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:taxonomy/Resources/Public/Icons/Folder.svg',
+    ],
 ];

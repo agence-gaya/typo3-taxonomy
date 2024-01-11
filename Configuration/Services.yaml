@@ -6,6 +6,10 @@ services:
   GAYA\Taxonomy\:
     resource: '../Classes/*'
 
+  GAYA\Taxonomy\Utility\SiteConfigurationUtility:
+    public: true
+    shared: false
+
   # Events
   GAYA\Taxonomy\Tca\Registry:
     tags:
