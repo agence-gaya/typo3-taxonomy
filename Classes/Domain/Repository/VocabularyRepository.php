@@ -26,7 +26,7 @@ class VocabularyRepository
             ->where(
                 $qb->expr()->in('sys_language_uid', [
                     0,
-                    -1
+                    -1,
                 ])
             )
             ->orderBy('title', 'asc');

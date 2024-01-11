@@ -19,6 +19,9 @@
   "require": {
     "typo3/cms-core": "~12.4"
   },
+  "require-dev": {
+    "typo3/coding-standards": "^0.7.1"
+  },
   "autoload": {
     "psr-4": {
       "GAYA\\Taxonomy\\": "Classes/"
@@ -32,6 +35,16 @@
   "extra": {
     "typo3/cms": {
       "extension-key": "taxonomy"
+    }
+  },
+  "scripts": {
+    "ci:php-cs-fixer": "vendor/bin/php-cs-fixer fix --diff --dry-run --verbose",
+    "php-cs-fixer": "vendor/bin/php-cs-fixer fix --diff --verbose"
+  },
+  "config": {
+    "allow-plugins": {
+      "typo3/cms-composer-installers": true,
+      "typo3/class-alias-loader": true
     }
   }
 }

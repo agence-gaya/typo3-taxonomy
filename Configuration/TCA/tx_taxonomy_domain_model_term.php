@@ -74,7 +74,7 @@ return [
                 'items' => [
                     [
                         'label' => '',
-                        'value' => 0
+                        'value' => 0,
                     ],
                 ],
                 'foreign_table' => 'tx_taxonomy_domain_model_term',

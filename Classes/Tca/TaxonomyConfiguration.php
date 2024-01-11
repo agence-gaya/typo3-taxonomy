@@ -35,8 +35,7 @@ final class TaxonomyConfiguration
         string $tableName,
         string $fieldName,
         string $vocabularyName
-    )
-    {
+    ) {
         $this->tableName = $tableName;
         $this->fieldName = $fieldName;
         $this->vocabularyName = $vocabularyName;

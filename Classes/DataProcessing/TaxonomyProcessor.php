@@ -27,13 +27,10 @@ use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
  *   # You just need to pass the localized uid of the record.
  *   # recUid.field = _LOCALIZED_UID // _PAGES_OVERLAY_UID // uid
  * }
- *
  */
 class TaxonomyProcessor implements DataProcessorInterface
 {
-    public function __construct(protected TermRepository $termRepository)
-    {
-    }
+    public function __construct(protected TermRepository $termRepository) {}
 
     public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData)
     {
@@ -56,7 +53,7 @@ class TaxonomyProcessor implements DataProcessorInterface
         // The uid of the record to find relations
         if (isset($processorConfiguration['recUid']) || isset($processorConfiguration['recUid.'])) {
             $recUid = (int)$cObj->stdWrapValue('recUid', $processorConfiguration);
-        } else if ($tableName === 'pages') {
+        } elseif ($tableName === 'pages') {
             $recUid = $cObj->data['_PAGES_OVERLAY_UID'] ?? $cObj->data['uid'] ?? 0;
         } else {
             $recUid = $cObj->data['_LOCALIZED_UID'] ?? $cObj->data['uid'] ?? 0;

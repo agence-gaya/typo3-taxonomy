@@ -28,7 +28,6 @@ final class Registry implements SingletonInterface
      *
      * @param TaxonomyConfiguration $configuration Configuration of the field
      * @param bool $override If TRUE, any taxonomy configuration for the same table / field is removed before the new configuration is added
-     * @return void
      * @throws \InvalidArgumentException
      */
     public function configureTaxonomyField(TaxonomyConfiguration $configuration, bool $override = false): void
@@ -175,7 +174,7 @@ final class Registry implements SingletonInterface
                     'expandAll' => true,
                 ],
             ];
-        } else if ($renderType === 'selectSingle') {
+        } elseif ($renderType === 'selectSingle') {
             $fieldConfiguration['items'] = [
                 [
                     'label' => '',

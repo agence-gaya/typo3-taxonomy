@@ -21,9 +21,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 final class SiteConfigurationUtility
 {
-    public function __construct(protected VocabularyRepository $vocabularyRepository)
-    {
-    }
+    public function __construct(protected VocabularyRepository $vocabularyRepository) {}
 
     public function addTaxonomyFields(): void
     {
@@ -40,7 +38,8 @@ final class SiteConfigurationUtility
                 'label' => 'UID',
                 'description' => LocalizationUtility::translate(
                     'LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:site_configuration.uid.description',
-                    'Taxonomy'),
+                    'Taxonomy'
+                ),
                 'config' => [
                     // We use a type select here, because input[readOnly=true] is not stored in yaml,
                     // and there is no other way to both hide and store the uid in the yaml config.
@@ -66,7 +65,7 @@ final class SiteConfigurationUtility
                     'Taxonomy',
                     [
                         $vocabulary['title'],
-                        $vocabulary['name']
+                        $vocabulary['name'],
                     ]
                 ),
                 'config' => [
@@ -149,11 +148,12 @@ final class SiteConfigurationUtility
                         'sys_language_uid',
                         $qb->createNamedParameter([
                             0,
-                            -1
+                            -1,
                         ], ArrayParameterType::INTEGER)
                     ),
                     $qb->expr()->eq(
-                        'module', $qb->createNamedParameter('taxonomy')
+                        'module',
+                        $qb->createNamedParameter('taxonomy')
                     ),
                 )
             )
