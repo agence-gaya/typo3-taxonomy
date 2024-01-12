@@ -17,6 +17,15 @@ services:
         identifier: 'gaya-taxonomy-tca-registry'
         method: 'addTaxonomyDatabaseSchema'
 
+  GAYA\Taxonomy\TsConfig\Loader:
+    public: true
+    shared: false
+    tags:
+      - name: event.listener
+        identifier: 'gaya-taxonomy-page-ts-config'
+        event: TYPO3\CMS\Core\TypoScript\IncludeTree\Event\ModifyLoadedPageTsConfigEvent
+        method: 'addTaxonomyConfiguration'
+
   # DataProcessor
   GAYA\Taxonomy\DataProcessing\TaxonomyProcessor:
     shared: false
