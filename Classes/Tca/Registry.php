@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace GAYA\Taxonomy\Tca;
 
-use TYPO3\CMS\Core\Database\Event\AlterTableDefinitionStatementsEvent;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -233,33 +232,5 @@ final class Registry implements SingletonInterface
         $fieldList .= $fieldName;
 
         return $fieldList;
-    }
-
-    /**
-     * An event listener to inject the required taxonomy database fields to the
-     * tables definition string
-     */
-    public function addTaxonomyDatabaseSchema(AlterTableDefinitionStatementsEvent $event): void
-    {
-        $event->addSqlData($this->getDatabaseTableDefinitions());
-    }
-
-    /**
-     * Generates tables definitions for all registered fields.
-     */
-    protected function getDatabaseTableDefinitions(): string
-    {
-        $sql = '';
-
-        $template = str_repeat(PHP_EOL, 3) . 'CREATE TABLE %s (' . PHP_EOL
-            . '  %s int(11) DEFAULT \'0\' NOT NULL' . PHP_EOL . ');' . str_repeat(PHP_EOL, 3);
-
-        foreach ($this->registry as $tableName => $fields) {
-            foreach (array_keys($fields) as $fieldName) {
-                $sql .= sprintf($template, $tableName, $fieldName);
-            }
-        }
-
-        return $sql;
     }
 }

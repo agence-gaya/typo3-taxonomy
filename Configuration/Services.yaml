@@ -11,10 +11,10 @@ services:
     shared: false
 
   # Events
-  GAYA\Taxonomy\Tca\Registry:
+  GAYA\Taxonomy\Database\SchemaGenerator:
     tags:
       - name: event.listener
-        identifier: 'gaya-taxonomy-tca-registry'
+        identifier: 'gaya-taxonomy-db-schema-generator'
         method: 'addTaxonomyDatabaseSchema'
 
   GAYA\Taxonomy\TsConfig\Loader:
