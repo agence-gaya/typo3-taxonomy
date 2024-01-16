@@ -116,3 +116,9 @@ page.10 {
 ```
 
 See `\GAYA\Taxonomy\DataProcessing\TaxonomyProcessor` for more details about available options.
+
+## FAQ
+
+### I don't see any Taxonomy tab in the Site configuration
+
+At least one vocabulary must exists somewhere in the pagetree to make the Taxonomy tab available in the site configuration. 
