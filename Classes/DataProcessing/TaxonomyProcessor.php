@@ -20,6 +20,9 @@ use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
  *   fieldName = my_taxonomy_field
  *   as = my_taxonomy_field
  *
+ *   # If you do not need a collection, you can get the first or null
+ *   # returnFirst = 1
+ *
  *   # If not given, tableName is taken from the current cObj table.
  *   # tableName = tx_myother_table
  *
@@ -62,12 +65,18 @@ class TaxonomyProcessor implements DataProcessorInterface
             return $processedData;
         }
 
+        $returnFirst = (bool) ($processorConfiguration['returnFirst'] ?? false);
+
         // Gather data
-        $terms = $this->termRepository->findByRelation($tableName, $fieldName, $recUid);
+        if ($returnFirst) {
+            $data = $this->termRepository->findOneByRelation($tableName, $fieldName, $recUid);
+        } else {
+            $data = $this->termRepository->findByRelation($tableName, $fieldName, $recUid);
+        }
 
         // set the terms into a variable, default to the field name
         $targetVariableName = $cObj->stdWrapValue('as', $processorConfiguration, $fieldName);
-        $processedData[$targetVariableName] = $terms;
+        $processedData[$targetVariableName] = $data;
 
         return $processedData;
     }
