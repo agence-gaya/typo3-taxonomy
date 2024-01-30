@@ -21,11 +21,12 @@ return [
         'languageField' => 'sys_language_uid',
         'translationSource' => 'l10n_source',
         'versioningWS' => true,
+        'type' => 'vocabulary:name',
         // todo: activer le hideTable quand le module sera prêt
         //'hideTable' => true,
     ],
     'types' => [
-        '1' => [
+        '0' => [
             'showitem' =>
                 '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                     title, vocabulary, parent,
