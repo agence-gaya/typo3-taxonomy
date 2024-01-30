@@ -9,7 +9,7 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'delete' => 'deleted',
-        'default_sortby' => 'title',
+        'default_sortby' => 'vocabulary ASC, title ASC',
         'iconfile' => 'EXT:taxonomy/Resources/Public/Icons/Term.svg',
         'searchFields' => 'title',
         'useColumnsForDefaultValues' => 'vocabulary',
