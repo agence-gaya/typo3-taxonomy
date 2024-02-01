@@ -38,6 +38,9 @@
     }
   },
   "scripts": {
+    "ci": [
+      "@ci:php-cs-fixer"
+    ],
     "ci:php-cs-fixer": "vendor/bin/php-cs-fixer fix --diff --dry-run --verbose",
     "php-cs-fixer": "vendor/bin/php-cs-fixer fix --diff --verbose"
   },
