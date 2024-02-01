@@ -65,7 +65,7 @@ class TaxonomyProcessor implements DataProcessorInterface
             return $processedData;
         }
 
-        $returnFirst = (bool) ($processorConfiguration['returnFirst'] ?? false);
+        $returnFirst = (bool)($processorConfiguration['returnFirst'] ?? false);
 
         // Gather data
         if ($returnFirst) {
