@@ -31,6 +31,10 @@ class TermRepository extends Repository
             $sortingForeign[$row['uid_local']] = $row['sorting_foreign'];
         }
 
+        if ($terms === []) {
+            return [];
+        }
+
         // Load all the Extbase entities from the term's uid.
         $queryResult = $this->loadExtbaseEntities($terms);
 
@@ -50,6 +54,10 @@ class TermRepository extends Repository
         $terms = [];
         foreach ($result->fetchAllAssociative() as $row) {
             $terms[] = $row['uid_local'];
+        }
+
+        if ($terms === []) {
+            return null;
         }
 
         // Load all the Extbase entities from the term's uid.
