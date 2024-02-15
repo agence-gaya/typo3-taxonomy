@@ -46,7 +46,7 @@ class ForEachViewHelper extends AbstractViewHelper
             $iterationData = [
                 'index' => 0,
                 'cycle' => 1,
-                'total' => count($each)
+                'total' => count($each),
             ];
         }
 
