@@ -11,7 +11,7 @@ composer require gaya/typo3-taxonomy
 ## Site configuration
 
    > Vocabularies are global to the TYPO3 instance, only admins can manage them.
-   > 
+   >
    > Terms of a vocabulary can be stored in a common folder or stored inside a Site.
 
 1. (Optional) Create a global "Taxonomy" storage folder, set the field "Contains plugin" to "Taxonomy", and create one or more vocabularies inside it.
@@ -117,8 +117,26 @@ page.10 {
 
 See `\GAYA\Taxonomy\DataProcessing\TaxonomyProcessor` for more details about available options.
 
+### Fluid ViewHelper
+
+Iterate over a taxonomy relation:
+
+```html
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:taxonomy="http://typo3.org/ns/GAYA/Taxonomy/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <taxonomy:forEach tableName="pages" fieldName="my_taxonomy_field" recUid="123" as="term" iteration="i">
+        {i.cycle} {term.title}
+    </taxonomy:forEach>
+
+</html>
+```
+
+See `\GAYA\Taxonomy\ViewHelpers\ForEach` for more details about available arguments.
+
 ## FAQ
 
 ### I don't see any Taxonomy tab in the Site configuration
 
-At least one vocabulary must exists somewhere in the pagetree to make the Taxonomy tab available in the site configuration. 
+At least one vocabulary must exists somewhere in the pagetree to make the Taxonomy tab available in the site configuration.
