@@ -11,7 +11,7 @@ use TYPO3\CMS\Core\TypoScript\IncludeTree\Event\ModifyLoadedPageTsConfigEvent;
  */
 final class Loader
 {
-    private const TS_CONFIG = <<<TSCONFIG
+    private const string TS_CONFIG = <<<TSCONFIG
 mod.web_list.hideTables = pages
 mod.web_list.allowedNewTables = tx_taxonomy_domain_model_term,tx_taxonomy_domain_model_vocabulary
 TSCONFIG;
@@ -33,6 +33,7 @@ TSCONFIG;
                 if (!isset($tsConfig['page_' . $page['uid']])) {
                     $tsConfig['page_' . $page['uid']] = '';
                 }
+
                 $tsConfig['page_' . $page['uid']] .= LF . self::TS_CONFIG;
             }
         }

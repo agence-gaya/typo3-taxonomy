@@ -61,6 +61,7 @@ class TaxonomyProcessor implements DataProcessorInterface
         } else {
             $recUid = $cObj->data['_LOCALIZED_UID'] ?? $cObj->data['uid'] ?? 0;
         }
+
         if (empty($recUid)) {
             return $processedData;
         }

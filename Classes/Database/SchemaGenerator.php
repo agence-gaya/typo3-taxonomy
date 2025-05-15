@@ -20,13 +20,13 @@ final class SchemaGenerator
     /**
      * Generates tables definitions for all taxonomy fields.
      */
-    protected function getDatabaseTableDefinitions(): string
+    private function getDatabaseTableDefinitions(): string
     {
         $sql = '';
 
         $template = str_repeat(PHP_EOL, 3)
             . 'CREATE TABLE %s (' . PHP_EOL
-            . '  %s int(11) DEFAULT \'0\' NOT NULL' . PHP_EOL
+            . "  %s int(11) DEFAULT '0' NOT NULL" . PHP_EOL
             . ');' . str_repeat(PHP_EOL, 3);
 
         foreach ($this->getDefinedFields() as $tableName => $fields) {
@@ -41,7 +41,7 @@ final class SchemaGenerator
     /**
      * Find all taxonomy fields in the cached TCA
      */
-    protected function getDefinedFields(): array
+    private function getDefinedFields(): array
     {
         if (!isset($GLOBALS['TCA'])) {
             throw new \RuntimeException('TCA must be loaded at this point', 1705068918);

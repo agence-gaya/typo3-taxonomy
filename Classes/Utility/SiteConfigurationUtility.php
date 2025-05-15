@@ -19,9 +19,9 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  *
  * @internal
  */
-final class SiteConfigurationUtility
+final readonly class SiteConfigurationUtility
 {
-    public function __construct(protected VocabularyRepository $vocabularyRepository) {}
+    public function __construct(private VocabularyRepository $vocabularyRepository) {}
 
     public function addTaxonomyFields(): void
     {
@@ -71,7 +71,7 @@ final class SiteConfigurationUtility
                 'config' => [
                     'type' => 'select',
                     'renderType' => 'selectSingle',
-                    'items' => $this->buildStoragePidSelectItems($vocabulary),
+                    'items' => $this->buildStoragePidSelectItems(),
                 ],
             ];
 
@@ -91,12 +91,12 @@ final class SiteConfigurationUtility
         }
     }
 
-    protected function getAllVocabulary(): array
+    private function getAllVocabulary(): array
     {
         return $this->vocabularyRepository->getAllVocabulary();
     }
 
-    protected function buildStoragePidSelectItems(): array
+    private function buildStoragePidSelectItems(): array
     {
         $items = [];
 
@@ -131,7 +131,7 @@ final class SiteConfigurationUtility
         return $items;
     }
 
-    protected function getAllTaxonomySysFolders(): array
+    private function getAllTaxonomySysFolders(): array
     {
         $qb = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('pages');

@@ -117,12 +117,7 @@ class TermRepository extends Repository
             static function (Term $a, Term $b) use ($sorting) {
                 $sortA = $sorting[$a->getUid()];
                 $sortB = $sorting[$b->getUid()];
-
-                if ($sortA === $sortB) {
-                    return 0;
-                }
-
-                return ($sortA < $sortB) ? -1 : 1;
+                return $sortA <=> $sortB;
             }
         );
 

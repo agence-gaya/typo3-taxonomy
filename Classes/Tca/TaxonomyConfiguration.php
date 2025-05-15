@@ -6,39 +6,28 @@ namespace GAYA\Taxonomy\Tca;
 
 final class TaxonomyConfiguration
 {
-    protected const SELECT_SINGLE = 'selectSingle';
-    protected const SELECT_TREE = 'selectTree';
+    protected const string SELECT_SINGLE = 'selectSingle';
 
-    protected string $tableName;
+    protected const string SELECT_TREE = 'selectTree';
 
-    protected string $fieldName;
+    private string $label = '';
 
-    protected string $vocabularyName;
+    private string $description = '';
 
-    protected string $label = '';
+    private array $types = [];
 
-    protected string $description = '';
+    private string $position = '';
 
-    protected array $types = [];
+    private string $displayCond = '';
 
-    protected string $position = '';
+    private string $onChange = '';
 
-    protected string $displayCond = '';
+    private string $renderType = self::SELECT_SINGLE;
 
-    protected string $onChange = '';
+    private array $configurationOverride = [];
 
-    protected string $renderType = self::SELECT_SINGLE;
-
-    protected array $configurationOverride = [];
-
-    public function __construct(
-        string $tableName,
-        string $fieldName,
-        string $vocabularyName
-    ) {
-        $this->tableName = $tableName;
-        $this->fieldName = $fieldName;
-        $this->vocabularyName = $vocabularyName;
+    public function __construct(private readonly string $tableName, private readonly string $fieldName, private readonly string $vocabularyName)
+    {
     }
 
     public function getTableName(): string

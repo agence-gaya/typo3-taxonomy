@@ -15,9 +15,9 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  */
 final class Registry implements SingletonInterface
 {
-    protected array $registry = [];
+    private array $registry = [];
 
-    protected array $addedTaxonomyTabs = [];
+    private array $addedTaxonomyTabs = [];
 
     /**
      * Adds a new taxonomy configuration to this registry.
@@ -31,13 +31,15 @@ final class Registry implements SingletonInterface
      */
     public function configureTaxonomyField(TaxonomyConfiguration $configuration, bool $override = false): void
     {
-        if (empty($configuration->getTableName())) {
+        if (in_array($configuration->getTableName(), ['', '0'], true)) {
             throw new \InvalidArgumentException('No or invalid table name "' . $configuration->getTableName() . '" given.', 1703252976);
         }
-        if (empty($configuration->getFieldName())) {
+
+        if (in_array($configuration->getFieldName(), ['', '0'], true)) {
             throw new \InvalidArgumentException('No or invalid field name "' . $configuration->getFieldName() . '" given.', 1703252977);
         }
-        if (empty($configuration->getVocabularyName())) {
+
+        if (in_array($configuration->getVocabularyName(), ['', '0'], true)) {
             throw new \InvalidArgumentException('No or invalid vocabulary name "' . $configuration->getVocabularyName() . '" given.', 1703252978);
         }
 
@@ -68,7 +70,7 @@ final class Registry implements SingletonInterface
     /**
      * Removes the given field in the given table from the registry if it is found.
      */
-    protected function remove(string $tableName, string $fieldName): void
+    private function remove(string $tableName, string $fieldName): void
     {
         if (!$this->isRegistered($tableName, $fieldName)) {
             return;
@@ -87,19 +89,16 @@ final class Registry implements SingletonInterface
      *
      * @param string $tableName Name of the table to be looked up
      * @param string $fieldName Name of the field to be looked up
-     * @return bool
      */
-    protected function isRegistered(string $tableName, string $fieldName): bool
+    private function isRegistered(string $tableName, string $fieldName): bool
     {
         return isset($this->registry[$tableName][$fieldName]);
     }
 
     /**
      * Applies the additions directly to the TCA
-     *
-     * @param TaxonomyConfiguration $configuration
      */
-    protected function applyTcaForConfiguration(TaxonomyConfiguration $configuration): void
+    private function applyTcaForConfiguration(TaxonomyConfiguration $configuration): void
     {
         $this->addTcaColumn($configuration);
         $this->addToAllTCAtypes($configuration);
@@ -110,7 +109,7 @@ final class Registry implements SingletonInterface
      *
      * @param TaxonomyConfiguration $configuration Configuration of the field
      */
-    protected function addTcaColumn(TaxonomyConfiguration $configuration): void
+    private function addTcaColumn(TaxonomyConfiguration $configuration): void
     {
         $columns = [
             $configuration->getFieldName() => [
@@ -134,6 +133,7 @@ final class Registry implements SingletonInterface
         if (empty($GLOBALS['TCA']['tx_taxonomy_domain_model_term']['columns']['items']['config']['MM_oppositeUsage'][$configuration->getTableName()])) {
             $GLOBALS['TCA']['tx_taxonomy_domain_model_term']['columns']['items']['config']['MM_oppositeUsage'][$configuration->getTableName()] = [];
         }
+
         if (!in_array($configuration->getFieldName(), $GLOBALS['TCA']['tx_taxonomy_domain_model_term']['columns']['items']['config']['MM_oppositeUsage'][$configuration->getTableName()])) {
             $GLOBALS['TCA']['tx_taxonomy_domain_model_term']['columns']['items']['config']['MM_oppositeUsage'][$configuration->getTableName()][] = $configuration->getFieldName();
         }
@@ -147,7 +147,7 @@ final class Registry implements SingletonInterface
      * This method does NOT take care of adding sql fields, adding the field to TCA types
      * nor does it set the MM_oppositeUsage in the tx_taxonomy_domain_model_term TCA.
      */
-    protected function getTcaFieldConfiguration(string $tableName, string $fieldName, string $vocabularyName, string $renderType, array $fieldConfigurationOverride = []): array
+    private function getTcaFieldConfiguration(string $tableName, string $fieldName, string $vocabularyName, string $renderType, array $fieldConfigurationOverride = []): array
     {
         // Forges a new field
         $fieldConfiguration = [
@@ -185,7 +185,7 @@ final class Registry implements SingletonInterface
         }
 
         // Merge changes to TCA configuration
-        if (!empty($fieldConfigurationOverride)) {
+        if ($fieldConfigurationOverride !== []) {
             ArrayUtility::mergeRecursiveWithOverrule(
                 $fieldConfiguration,
                 $fieldConfigurationOverride
@@ -197,20 +197,19 @@ final class Registry implements SingletonInterface
 
     /**
      * Add a new field into the TCA types -> showitem
-     *
-     * @param TaxonomyConfiguration $configuration
      */
-    protected function addToAllTCAtypes(TaxonomyConfiguration $configuration): void
+    private function addToAllTCAtypes(TaxonomyConfiguration $configuration): void
     {
         // Makes sure to add more TCA to an existing structure
         if (!isset($GLOBALS['TCA'][$configuration->getTableName()]['columns'])) {
             return;
         }
 
-        $fieldList = $configuration->getPosition() ? $configuration->getFieldName() : '';
-        if (empty($fieldList)) {
+        $fieldList = $configuration->getPosition() !== '' && $configuration->getPosition() !== '0' ? $configuration->getFieldName() : '';
+        if ($fieldList === '' || $fieldList === '0') {
             $fieldList = $this->addTaxonomyTab($configuration->getTableName(), $configuration->getFieldName());
         }
+
         $typesList = implode(',', $configuration->getTypes());
         $position = $configuration->getPosition();
 
@@ -222,15 +221,15 @@ final class Registry implements SingletonInterface
      * Creates the 'fieldList' string for $fieldName which includes a taxonomy tab.
      * But only one taxonomy tab is added per table.
      */
-    protected function addTaxonomyTab(string $tableName, string $fieldName): string
+    private function addTaxonomyTab(string $tableName, string $fieldName): string
     {
         $fieldList = '';
         if (!isset($this->addedTaxonomyTabs[$tableName])) {
             $fieldList .= '--div--;LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tabs.taxonomy, ';
             $this->addedTaxonomyTabs[$tableName] = true;
         }
-        $fieldList .= $fieldName;
 
-        return $fieldList;
+
+        return $fieldList . $fieldName;
     }
 }

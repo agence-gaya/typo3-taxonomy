@@ -10,12 +10,9 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\Variables\ScopedVariableProvider;
 use TYPO3Fluid\Fluid\Core\Variables\StandardVariableProvider;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 class ForEachViewHelper extends AbstractViewHelper
 {
-    use CompileWithRenderStatic;
-
     protected $escapeOutput = false;
 
     public function initializeArguments()
@@ -35,14 +32,15 @@ class ForEachViewHelper extends AbstractViewHelper
      * @param RenderingContextInterface $renderingContext
      * @return string
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
+    #[\Override]
+    public function render()
     {
-        $each = static::getTerms($arguments['tableName'], $arguments['fieldName'], $arguments['recUid']);
-        if (empty($each)) {
+        $each = static::getTerms($this->arguments['tableName'], $this->arguments['fieldName'], $this->arguments['recUid']);
+        if ($each === []) {
             return '';
         }
 
-        if (isset($arguments['iteration'])) {
+        if (isset($this->arguments['iteration'])) {
             $iterationData = [
                 'index' => 0,
                 'cycle' => 1,
@@ -50,27 +48,26 @@ class ForEachViewHelper extends AbstractViewHelper
             ];
         }
 
-        $globalVariableProvider = $renderingContext->getVariableProvider();
+        $globalVariableProvider = $this->renderingContext->getVariableProvider();
         $localVariableProvider = new StandardVariableProvider();
-        $renderingContext->setVariableProvider(new ScopedVariableProvider($globalVariableProvider, $localVariableProvider));
-
+        $this->renderingContext->setVariableProvider(new ScopedVariableProvider($globalVariableProvider, $localVariableProvider));
         $output = '';
         foreach ($each as $singleElement) {
-            $localVariableProvider->add($arguments['as'], $singleElement);
+            $localVariableProvider->add($this->arguments['as'], $singleElement);
             if (isset($iterationData)) {
                 $iterationData['isFirst'] = $iterationData['cycle'] === 1;
                 $iterationData['isLast'] = $iterationData['cycle'] === $iterationData['total'];
                 $iterationData['isEven'] = $iterationData['cycle'] % 2 === 0;
                 $iterationData['isOdd'] = !$iterationData['isEven'];
-                $localVariableProvider->add($arguments['iteration'], $iterationData);
+                $localVariableProvider->add($this->arguments['iteration'], $iterationData);
                 $iterationData['index']++;
                 $iterationData['cycle']++;
             }
-            $output .= $renderChildrenClosure();
+
+            $output .= $this->renderChildren();
         }
 
-        $renderingContext->setVariableProvider($globalVariableProvider);
-
+        $this->renderingContext->setVariableProvider($globalVariableProvider);
         return $output;
     }
 

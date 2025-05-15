@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace GAYA\Taxonomy\UserFunc;
 
-use TYPO3\CMS\Backend\Form\FormDataProvider\TcaSlug;
-
 /**
  * @internal
  */
@@ -19,14 +17,14 @@ final class SlugUserFunc
         return preg_replace(
             '#[^a-z0-9]#',
             '_',
-            mb_strtolower($params['slug'])
+            mb_strtolower((string) $params['slug'])
         );
     }
 
     /**
      * Returns an empty string to disable the prefix widget aside the slug field
      */
-    public function noPrefix(array $parameters, TcaSlug $reference): string
+    public function noPrefix(): string
     {
         return '';
     }
