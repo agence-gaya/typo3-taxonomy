@@ -4,7 +4,7 @@ Taxonomy extension for TYPO3 CMS
 
 ## Installation
 
-```
+```bash
 composer require gaya/typo3-taxonomy
 ```
 
@@ -63,18 +63,18 @@ The file can have any name but it is good practice to name it according to the d
 In this case this would be `pages.php`.
 
 ```php
-GeneralUtility::makeInstance(Registry::class)
+TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(GAYA\Taxonomy\Tca\Registry::class)
     ->configureTaxonomyField(
-        (new TaxonomyConfiguration('pages', 'my_taxonomy_field', 'my_vocabulary_name'))
+        (new GAYA\Taxonomy\Tca\TaxonomyConfiguration('pages', 'my_taxonomy_field', 'my_vocabulary_name'))
             // you can override label, which is by default the vocabulary name
             ->setLabel('My Vocabulary')
             // you can set the field description
             ->setDescription('Choose a term to associate with this content')
     );
 
-GeneralUtility::makeInstance(Registry::class)
+TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(GAYA\Taxonomy\Tca\Registry::class)
     ->configureTaxonomyField(
-        (new TaxonomyConfiguration('pages', 'my_other_taxonomy_field', 'my_other_vocabulary_name'))
+        (new GAYA\Taxonomy\Tca\TaxonomyConfiguration('pages', 'my_other_taxonomy_field', 'my_other_vocabulary_name'))
             ->setLabel('My Other Vocabulary')
             ->setDescription('Choose a term to associate with this content')
             // by default, renderType is selectSingle
@@ -82,7 +82,7 @@ GeneralUtility::makeInstance(Registry::class)
             // by default, field is optional
             ->setRequired()
             // if no types list given, the field will be added to every types
-            ->setTypes([ PageRepository::DOKTYPE_DEFAULT ])
+            ->setTypes([ TYPO3\CMS\Core\Domain\Repository\PageRepository::DOKTYPE_DEFAULT ])
             // by default, field is added in a Taxonomy tab, but you can
             // use the usual position definition to add the field where you want
             ->setPosition('after:title')
