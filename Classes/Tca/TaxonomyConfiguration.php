@@ -26,9 +26,7 @@ final class TaxonomyConfiguration
 
     private array $configurationOverride = [];
 
-    public function __construct(private readonly string $tableName, private readonly string $fieldName, private readonly string $vocabularyName)
-    {
-    }
+    public function __construct(private readonly string $tableName, private readonly string $fieldName, private readonly string $vocabularyName) {}
 
     public function getTableName(): string
     {
@@ -50,7 +48,7 @@ final class TaxonomyConfiguration
         return $this->label;
     }
 
-    public function setLabel(string $label): TaxonomyConfiguration
+    public function setLabel(string $label): self
     {
         $this->label = $label;
 
@@ -62,7 +60,7 @@ final class TaxonomyConfiguration
         return $this->description;
     }
 
-    public function setDescription(string $description): TaxonomyConfiguration
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -74,7 +72,7 @@ final class TaxonomyConfiguration
         return $this->types;
     }
 
-    public function setTypes(array $types): TaxonomyConfiguration
+    public function setTypes(array $types): self
     {
         $this->types = $types;
 
@@ -86,7 +84,7 @@ final class TaxonomyConfiguration
         return $this->position;
     }
 
-    public function setPosition(string $position): TaxonomyConfiguration
+    public function setPosition(string $position): self
     {
         $this->position = $position;
 
@@ -98,14 +96,14 @@ final class TaxonomyConfiguration
         return $this->renderType;
     }
 
-    public function setRenderTypeSelect(): TaxonomyConfiguration
+    public function setRenderTypeSelect(): self
     {
         $this->renderType = self::SELECT_SINGLE;
 
         return $this;
     }
 
-    public function setRenderTypeTree(): TaxonomyConfiguration
+    public function setRenderTypeTree(): self
     {
         $this->renderType = self::SELECT_TREE;
 
@@ -117,7 +115,7 @@ final class TaxonomyConfiguration
         return $this->configurationOverride;
     }
 
-    public function setConfigurationOverride(array $configurationOverride): TaxonomyConfiguration
+    public function setConfigurationOverride(array $configurationOverride): self
     {
         $this->configurationOverride = $configurationOverride;
 
@@ -129,7 +127,7 @@ final class TaxonomyConfiguration
         return $this->displayCond;
     }
 
-    public function setDisplayCond(string $displayCond): TaxonomyConfiguration
+    public function setDisplayCond(string $displayCond): self
     {
         $this->displayCond = $displayCond;
 
@@ -141,14 +139,14 @@ final class TaxonomyConfiguration
         return $this->onChange;
     }
 
-    public function setOnChange(string $onChange): TaxonomyConfiguration
+    public function setOnChange(string $onChange): self
     {
         $this->onChange = $onChange;
 
         return $this;
     }
 
-    public function setRequired(bool $required = true): TaxonomyConfiguration
+    public function setRequired(bool $required = true): self
     {
         $this->configurationOverride['required'] = $required;
 

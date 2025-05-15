@@ -16,7 +16,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 class TermRepository extends Repository
 {
     /**
-     * Return Term objects by relation to other records
+     * Return Term objects by relation to other records.
      */
     public function findByRelation(string $tableName, string $fieldName, int $uid): array
     {
@@ -43,7 +43,7 @@ class TermRepository extends Repository
     }
 
     /**
-     * Return the first Term object by relation to other records
+     * Return the first Term object by relation to other records.
      */
     public function findOneByRelation(string $tableName, string $fieldName, int $uid): ?Term
     {

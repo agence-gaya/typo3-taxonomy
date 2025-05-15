@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace GAYA\Taxonomy\ViewHelpers;
 
+use Closure;
 use GAYA\Taxonomy\Domain\Repository\TermRepository;
+use Override;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\Variables\ScopedVariableProvider;
@@ -27,12 +29,13 @@ class ForEachViewHelper extends AbstractViewHelper
     }
 
     /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
+     * @param array                     $arguments
+     * @param Closure                   $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
+     *
      * @return string
      */
-    #[\Override]
+    #[Override]
     public function render()
     {
         $each = static::getTerms($this->arguments['tableName'], $this->arguments['fieldName'], $this->arguments['recUid']);

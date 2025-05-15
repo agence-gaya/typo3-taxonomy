@@ -9,7 +9,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 
 /**
- * This data processor can be used for processing data for record which contain relations to Term records
+ * This data processor can be used for processing data for record which contain relations to Term records.
  *
  * Example TypoScript configuration:
  *
@@ -55,7 +55,7 @@ class TaxonomyProcessor implements DataProcessorInterface
 
         // The uid of the record to find relations
         if (isset($processorConfiguration['recUid']) || isset($processorConfiguration['recUid.'])) {
-            $recUid = (int)$cObj->stdWrapValue('recUid', $processorConfiguration);
+            $recUid = (int) $cObj->stdWrapValue('recUid', $processorConfiguration);
         } elseif ($tableName === 'pages') {
             $recUid = $cObj->data['_PAGES_OVERLAY_UID'] ?? $cObj->data['uid'] ?? 0;
         } else {
@@ -66,7 +66,7 @@ class TaxonomyProcessor implements DataProcessorInterface
             return $processedData;
         }
 
-        $returnFirst = (bool)($processorConfiguration['returnFirst'] ?? false);
+        $returnFirst = (bool) ($processorConfiguration['returnFirst'] ?? false);
 
         // Gather data
         if ($returnFirst) {

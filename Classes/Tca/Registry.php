@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GAYA\Taxonomy\Tca;
 
+use InvalidArgumentException;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -26,21 +27,22 @@ final class Registry implements SingletonInterface
      * Database changes will happen during AlterTableDefinitionStatementsEvent event.
      *
      * @param TaxonomyConfiguration $configuration Configuration of the field
-     * @param bool $override If TRUE, any taxonomy configuration for the same table / field is removed before the new configuration is added
-     * @throws \InvalidArgumentException
+     * @param bool                  $override      If TRUE, any taxonomy configuration for the same table / field is removed before the new configuration is added
+     *
+     * @throws InvalidArgumentException
      */
     public function configureTaxonomyField(TaxonomyConfiguration $configuration, bool $override = false): void
     {
         if (in_array($configuration->getTableName(), ['', '0'], true)) {
-            throw new \InvalidArgumentException('No or invalid table name "' . $configuration->getTableName() . '" given.', 1703252976);
+            throw new InvalidArgumentException('No or invalid table name "' . $configuration->getTableName() . '" given.', 1703252976);
         }
 
         if (in_array($configuration->getFieldName(), ['', '0'], true)) {
-            throw new \InvalidArgumentException('No or invalid field name "' . $configuration->getFieldName() . '" given.', 1703252977);
+            throw new InvalidArgumentException('No or invalid field name "' . $configuration->getFieldName() . '" given.', 1703252977);
         }
 
         if (in_array($configuration->getVocabularyName(), ['', '0'], true)) {
-            throw new \InvalidArgumentException('No or invalid vocabulary name "' . $configuration->getVocabularyName() . '" given.', 1703252978);
+            throw new InvalidArgumentException('No or invalid vocabulary name "' . $configuration->getVocabularyName() . '" given.', 1703252978);
         }
 
         if ($override) {
@@ -59,8 +61,8 @@ final class Registry implements SingletonInterface
         }
 
         if (!$didRegister) {
-            throw new \InvalidArgumentException(sprintf(
-                Registry::class . ': no vocabulary registered for field "%s.%s". Key was already registered.',
+            throw new InvalidArgumentException(sprintf(
+                self::class . ': no vocabulary registered for field "%s.%s". Key was already registered.',
                 $configuration->getTableName(),
                 $configuration->getFieldName()
             ), 1703267651);
@@ -96,7 +98,7 @@ final class Registry implements SingletonInterface
     }
 
     /**
-     * Applies the additions directly to the TCA
+     * Applies the additions directly to the TCA.
      */
     private function applyTcaForConfiguration(TaxonomyConfiguration $configuration): void
     {
@@ -105,7 +107,7 @@ final class Registry implements SingletonInterface
     }
 
     /**
-     * Add a new TCA Column
+     * Add a new TCA Column.
      *
      * @param TaxonomyConfiguration $configuration Configuration of the field
      */
@@ -181,7 +183,7 @@ final class Registry implements SingletonInterface
                 ],
             ];
         } else {
-            throw new \InvalidArgumentException('No or invalid renderType "' . $renderType . '" given.', 1704757909);
+            throw new InvalidArgumentException('No or invalid renderType "' . $renderType . '" given.', 1704757909);
         }
 
         // Merge changes to TCA configuration
@@ -196,7 +198,7 @@ final class Registry implements SingletonInterface
     }
 
     /**
-     * Add a new field into the TCA types -> showitem
+     * Add a new field into the TCA types -> showitem.
      */
     private function addToAllTCAtypes(TaxonomyConfiguration $configuration): void
     {
@@ -228,7 +230,6 @@ final class Registry implements SingletonInterface
             $fieldList .= '--div--;LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tabs.taxonomy, ';
             $this->addedTaxonomyTabs[$tableName] = true;
         }
-
 
         return $fieldList . $fieldName;
     }

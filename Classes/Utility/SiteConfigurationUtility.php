@@ -15,7 +15,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * This class extends the SiteConfiguration pseudo TCA for Taxonomy configuration
+ * This class extends the SiteConfiguration pseudo TCA for Taxonomy configuration.
  *
  * @internal
  */

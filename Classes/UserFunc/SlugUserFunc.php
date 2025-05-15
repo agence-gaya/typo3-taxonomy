@@ -10,7 +10,7 @@ namespace GAYA\Taxonomy\UserFunc;
 final class SlugUserFunc
 {
     /**
-     * Normalizes the slug to be as simple as possible
+     * Normalizes the slug to be as simple as possible.
      */
     public function normalize(array $params): string
     {
@@ -22,7 +22,7 @@ final class SlugUserFunc
     }
 
     /**
-     * Returns an empty string to disable the prefix widget aside the slug field
+     * Returns an empty string to disable the prefix widget aside the slug field.
      */
     public function noPrefix(): string
     {

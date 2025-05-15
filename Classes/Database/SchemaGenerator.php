@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace GAYA\Taxonomy\Database;
 
+use RuntimeException;
 use TYPO3\CMS\Core\Database\Event\AlterTableDefinitionStatementsEvent;
 
 final class SchemaGenerator
 {
     /**
      * An event listener to inject the required taxonomy database fields to the
-     * tables definition string
+     * tables definition string.
      */
     public function addTaxonomyDatabaseSchema(AlterTableDefinitionStatementsEvent $event): void
     {
@@ -39,12 +40,12 @@ final class SchemaGenerator
     }
 
     /**
-     * Find all taxonomy fields in the cached TCA
+     * Find all taxonomy fields in the cached TCA.
      */
     private function getDefinedFields(): array
     {
         if (!isset($GLOBALS['TCA'])) {
-            throw new \RuntimeException('TCA must be loaded at this point', 1705068918);
+            throw new RuntimeException('TCA must be loaded at this point', 1705068918);
         }
 
         $fields = [];
