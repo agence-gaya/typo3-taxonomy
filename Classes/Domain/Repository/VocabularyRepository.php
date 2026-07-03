@@ -7,13 +7,14 @@ namespace GAYA\Taxonomy\Domain\Repository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\WorkspaceRestriction;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class VocabularyRepository
 {
+    public function __construct(private readonly ConnectionPool $connectionPool) {}
+
     public function getAllVocabulary(): array
     {
-        $qb = GeneralUtility::makeInstance(ConnectionPool::class)
+        $qb = $this->connectionPool
             ->getQueryBuilderForTable('tx_taxonomy_domain_model_vocabulary');
         $qb->getRestrictions()
             ->removeAll()

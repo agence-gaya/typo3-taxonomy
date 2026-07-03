@@ -6,9 +6,9 @@ namespace GAYA\Taxonomy\Tca;
 
 final class TaxonomyConfiguration
 {
-    protected const string SELECT_SINGLE = 'selectSingle';
+    private const string SELECT_SINGLE = 'selectSingle';
 
-    protected const string SELECT_TREE = 'selectTree';
+    private const string SELECT_TREE = 'selectTree';
 
     private string $label = '';
 

@@ -11,7 +11,6 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\EndTimeRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\StartTimeRestriction;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -21,7 +20,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 final readonly class SiteConfigurationUtility
 {
-    public function __construct(private VocabularyRepository $vocabularyRepository) {}
+    public function __construct(private VocabularyRepository $vocabularyRepository, private ConnectionPool $connectionPool) {}
 
     public function addTaxonomyFields(): void
     {
@@ -133,7 +132,7 @@ final readonly class SiteConfigurationUtility
 
     private function getAllTaxonomySysFolders(): array
     {
-        $qb = GeneralUtility::makeInstance(ConnectionPool::class)
+        $qb = $this->connectionPool
             ->getQueryBuilderForTable('pages');
         $qb->getRestrictions()
             ->removeByType(HiddenRestriction::class)

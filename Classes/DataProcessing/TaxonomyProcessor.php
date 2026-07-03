@@ -57,7 +57,7 @@ class TaxonomyProcessor implements DataProcessorInterface
         if (isset($processorConfiguration['recUid']) || isset($processorConfiguration['recUid.'])) {
             $recUid = (int) $cObj->stdWrapValue('recUid', $processorConfiguration);
         } elseif ($tableName === 'pages') {
-            $recUid = $cObj->data['_PAGES_OVERLAY_UID'] ?? $cObj->data['uid'] ?? 0;
+            $recUid = $cObj->data['_LOCALIZED_UID'] ?? $cObj->data['uid'] ?? 0;
         } else {
             $recUid = $cObj->data['_LOCALIZED_UID'] ?? $cObj->data['uid'] ?? 0;
         }

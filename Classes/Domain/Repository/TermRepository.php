@@ -16,6 +16,14 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 class TermRepository extends Repository
 {
     /**
+     * Constructs a new Repository.
+     */
+    public function __construct(private readonly ConnectionPool $connectionPool)
+    {
+        parent::__construct();
+    }
+
+    /**
      * Return Term objects by relation to other records.
      */
     public function findByRelation(string $tableName, string $fieldName, int $uid): array
@@ -69,7 +77,7 @@ class TermRepository extends Repository
 
     protected function getQueryBuilderByRelation(string $tableName, string $fieldName, int $uid): QueryBuilder
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+        $queryBuilder = $this->connectionPool
             ->getQueryBuilderForTable('tx_taxonomy_domain_model_term_record_mm');
 
         $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
@@ -114,11 +122,7 @@ class TermRepository extends Repository
     {
         uasort(
             $result,
-            static function (Term $a, Term $b) use ($sorting) {
-                $sortA = $sorting[$a->getUid()];
-                $sortB = $sorting[$b->getUid()];
-                return $sortA <=> $sortB;
-            }
+            static fn(Term $a, Term $b) => $sorting[$a->getUid()] <=> $sorting[$b->getUid()]
         );
 
         return $result;

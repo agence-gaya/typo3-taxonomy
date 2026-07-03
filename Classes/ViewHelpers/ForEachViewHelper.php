@@ -17,7 +17,7 @@ class ForEachViewHelper extends AbstractViewHelper
 {
     protected $escapeOutput = false;
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('tableName', 'string', 'The table name of the record for which the taxonomy is to be loaded', true);
