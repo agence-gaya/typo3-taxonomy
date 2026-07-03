@@ -11,7 +11,6 @@ return [
         'delete' => 'deleted',
         'default_sortby' => 'vocabulary ASC, title ASC',
         'iconfile' => 'EXT:taxonomy/Resources/Public/Icons/Term.svg',
-        'searchFields' => 'title',
         'useColumnsForDefaultValues' => 'vocabulary',
         'enablecolumns' => [
             'disabled' => 'hidden',
@@ -28,18 +27,18 @@ return [
     'types' => [
         '0' => [
             'showitem' =>
-                '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                '--div--;core.form.tabs:general,
                     title, vocabulary, parent,
                 --div--;LLL:EXT:taxonomy/Resources/Private/Language/locallang_db.xlf:tabs.items,
                     items,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                --div--;core.form.tabs:access,
                     --palette--;;hidden',
         ],
     ],
     'palettes' => [
         'hidden' => [
             'showitem' => '
-                hidden;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:field.default.hidden
+                hidden;frontend.db.tt_content:hidden
             ',
         ],
     ],

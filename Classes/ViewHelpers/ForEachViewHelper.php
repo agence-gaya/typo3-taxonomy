@@ -15,6 +15,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 class ForEachViewHelper extends AbstractViewHelper
 {
+    #[Override]
     protected $escapeOutput = false;
 
     public function initializeArguments(): void

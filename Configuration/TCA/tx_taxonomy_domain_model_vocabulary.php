@@ -14,7 +14,6 @@ return [
         'delete' => 'deleted',
         'default_sortby' => 'title',
         'iconfile' => 'EXT:taxonomy/Resources/Public/Icons/Vocabulary.svg',
-        'searchFields' => 'title',
         'enablecolumns' => [
             'disabled' => 'hidden',
         ],
@@ -30,18 +29,18 @@ return [
     'types' => [
         '0' => [
             'showitem' =>
-                '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                '--div--;core.form.tabs:general,
                     title, name,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
+                --div--;core.form.tabs:notes,
                     rowDescription,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                --div--;core.form.tabs:access,
                     --palette--;;hidden',
         ],
     ],
     'palettes' => [
         'hidden' => [
             'showitem' => '
-                hidden;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:field.default.hidden
+                hidden;frontend.db.tt_content:hidden
             ',
         ],
     ],
@@ -75,6 +74,7 @@ return [
                 'fallbackCharacter' => '_',
                 'eval' => 'unique',
                 'default' => '',
+                'searchable' => false,
             ],
         ],
         'rowDescription' => [
@@ -84,6 +84,7 @@ return [
                 'type' => 'text',
                 'rows' => 5,
                 'cols' => 30,
+                'searchable' => false,
             ],
         ],
     ],
