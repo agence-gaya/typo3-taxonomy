@@ -9,7 +9,8 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'delete' => 'deleted',
-        'default_sortby' => 'vocabulary ASC, title ASC',
+        'sortby' => 'sorting',
+        'default_sortby' => 'vocabulary ASC, parent ASC, sorting ASC, title ASC',
         'iconfile' => 'EXT:taxonomy/Resources/Public/Icons/Term.svg',
         'useColumnsForDefaultValues' => 'vocabulary',
         'enablecolumns' => [
@@ -21,7 +22,7 @@ return [
         'translationSource' => 'l10n_source',
         'versioningWS' => true,
         'type' => 'vocabulary:name',
-        // todo: activer le hideTable quand le module sera prêt
+        // @todo Enable hideTable when the backend module is ready.
         //'hideTable' => true,
     ],
     'types' => [

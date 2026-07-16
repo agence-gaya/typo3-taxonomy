@@ -1,0 +1,50 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<f:layout name="Module" />
+
+<f:section name="Content">
+    <h1>Taxonomy</h1>
+    <f:flashMessages queueIdentifier="{flashMessageQueueIdentifier}" />
+
+    <f:if condition="{canList}">
+        <f:then>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th class="col-control" aria-label="Actions"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:for each="{vocabularies}" as="vocabulary">
+                        <tr>
+                            <td>{vocabulary.title}</td>
+                            <td class="col-control">
+                                <div class="btn-group" role="group">
+                                    <a href="{vocabulary.viewUrl}" class="btn btn-default" title="View">
+                                        <core:icon identifier="actions-view" size="small" />
+                                    </a>
+                                    <f:if condition="{canModify}">
+                                        <a href="{vocabulary.editUrl}" class="btn btn-default" title="Edit">
+                                            <core:icon identifier="actions-open" size="small" />
+                                        </a>
+                                        <a href="{vocabulary.deleteUrl}" class="btn btn-default t3js-taxonomy-delete" title="Delete" data-title="Delete this record?" data-message="Are you sure you want to delete the vocabulary '{vocabulary.title}'? This will also delete all associated terms.">
+                                            <core:icon identifier="actions-edit-delete" size="small" />
+                                        </a>
+                                    </f:if>
+                                </div>
+                            </td>
+                        </tr>
+                    </f:for>
+                </tbody>
+            </table>
+        </f:then>
+        <f:else>
+            <div class="alert alert-warning">You are not allowed to list vocabularies.</div>
+        </f:else>
+    </f:if>
+</f:section>

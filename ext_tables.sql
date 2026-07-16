@@ -12,9 +12,11 @@ CREATE TABLE tx_taxonomy_domain_model_term
     title       varchar(255)  DEFAULT '' NOT NULL,
     vocabulary  int (11) DEFAULT '0' NOT NULL,
     parent      int (11) DEFAULT '0' NOT NULL,
+    sorting     int (11) DEFAULT '0' NOT NULL,
     items       int (11) DEFAULT '0' NOT NULL,
 
-    KEY         idx_vocabulary(vocabulary)
+    KEY         idx_vocabulary(vocabulary),
+    KEY         idx_parent(parent)
 );
 
 CREATE TABLE tx_taxonomy_domain_model_term_record_mm

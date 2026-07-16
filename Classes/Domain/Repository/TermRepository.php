@@ -9,18 +9,68 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class TermRepository extends Repository
 {
+    private const string TABLE_NAME = 'tx_taxonomy_domain_model_term';
+
     /**
      * Constructs a new Repository.
      */
     public function __construct(private readonly ConnectionPool $connectionPool)
     {
         parent::__construct();
+    }
+
+    public function getTableName(): string
+    {
+        return self::TABLE_NAME;
+    }
+
+    public function findTerm(int $uid): ?array
+    {
+        if ($uid <= 0) {
+            return null;
+        }
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE_NAME);
+        $row = $queryBuilder
+            ->select('*')
+            ->from(self::TABLE_NAME)
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
+            )
+            ->executeQuery()
+            ->fetchAssociative();
+
+        return is_array($row) ? $row : null;
+    }
+
+    public function findTerms(int $vocabularyUid, ?int $pageId = null): array
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE_NAME);
+
+        $where = [
+            $queryBuilder->expr()->eq('vocabulary', $queryBuilder->createNamedParameter($vocabularyUid, Connection::PARAM_INT)),
+            $queryBuilder->expr()->in('sys_language_uid', [0, -1]),
+        ];
+
+        if ($pageId !== null) {
+            $where[] = $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($pageId, Connection::PARAM_INT));
+        }
+
+        return $queryBuilder
+            ->select('*')
+            ->from(self::TABLE_NAME)
+            ->where(...$where)
+            ->orderBy('parent', 'ASC')
+            ->addOrderBy('sorting', 'ASC')
+            ->addOrderBy('title', 'ASC')
+            ->executeQuery()
+            ->fetchAllAssociative();
     }
 
     /**
@@ -73,6 +123,51 @@ class TermRepository extends Repository
 
         // Finally, return the first (and only) result
         return $queryResult->getFirst();
+    }
+
+    public function removeTerm(int $uid): void
+    {
+        $this->processCommandMap([], [
+            self::TABLE_NAME => [
+                $uid => [
+                    'delete' => 1,
+                ],
+            ],
+        ]);
+    }
+
+    public function removeChildren(int $parent): void
+    {
+        $cmd = [];
+
+        foreach ($this->findTerms($parent) as $term) {
+            $cmd[$term['uid']] = [
+                'delete' => 1,
+            ];
+        }
+
+        $this->processCommandMap([], [
+            self::TABLE_NAME => $cmd,
+        ]);
+    }
+
+    public function updateTerm(int $uid, array $values): void
+    {
+        $data = [
+            self::TABLE_NAME => [
+                $uid => $values,
+            ],
+        ];
+
+        $this->processCommandMap($data, []);
+    }
+
+    private function processCommandMap(array $data, array $cmd): void
+    {
+        $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+        $dataHandler->start($data, $cmd);
+        $dataHandler->process_cmdmap();
+        $dataHandler->printLogErrorMessages();
     }
 
     protected function getQueryBuilderByRelation(string $tableName, string $fieldName, int $uid): QueryBuilder

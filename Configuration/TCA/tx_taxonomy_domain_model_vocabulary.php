@@ -23,7 +23,7 @@ return [
         'translationSource' => 'l10n_source',
         'versioningWS' => true,
         'adminOnly' => true,
-        // todo: activer le hideTable quand le module sera prêt
+        // @todo Enable hideTable when the backend module is ready.
         //'hideTable' => true,
     ],
     'types' => [
