@@ -10,6 +10,7 @@ class TaxonomyModule {
     DocumentService.ready().then(() => {
       this.initializeDeleteConfirmation();
       this.initializeTermSorting();
+      this.initializePageTree();
     });
   }
 
@@ -60,6 +61,44 @@ class TaxonomyModule {
       animation: 150,
       onEnd: (event) => this.persistTermSorting(table, event),
     });
+  }
+
+  initializePageTree() {
+    document.querySelector('typo3-backend-content-navigation').shadowRoot.addEventListener('click', (event) => {
+      const tree = document.querySelector('typo3-backend-content-navigation');
+
+      // 1. Vérifier si l'arbre existe et si le clic provient bien de lui
+      if (tree && event.composedPath().includes(tree)) {
+
+        // 2. event.composedPath() traverse le Shadow DOM pour trouver la balise <a> exacte
+        const link = event.composedPath().find(el => el.tagName && el.tagName.toUpperCase() === 'A');
+
+        if (link && link.href) {
+          const currentUrl = new URL(window.location.href);
+          const targetUrl = new URL(link.href, window.location.origin);
+
+          // 3. Boucler sur les paramètres de l'URL courante
+          let hasChanges = false;
+          currentUrl.searchParams.forEach((value, key) => {
+            // Filtrer pour ne garder que les paramètres de votre module
+            if (key === 'module') {
+              targetUrl.searchParams.set(key, value);
+              hasChanges = true;
+            }
+            if (key === 'vocabulary') {
+              targetUrl.searchParams.set(key, value);
+              hasChanges = true;
+            }
+          });
+
+          // 4. Injecter les paramètres dans le lien cliqué
+          if (hasChanges) {
+            // On met à jour l'attribut href à la volée
+            link.href = targetUrl.toString();
+          }
+        }
+      }
+    }, true); // IMPORTANT : "true" active la phase de capture.
   }
 
   persistTermSorting(table, event) {
